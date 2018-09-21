@@ -8,6 +8,11 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 public class SynthesizerActivity extends AppCompatActivity implements View.OnClickListener{
 
     private Button buttonA;
@@ -38,7 +43,14 @@ public class SynthesizerActivity extends AppCompatActivity implements View.OnCli
     private Button buttonTwinkle;
     private Button buttonNoSurprises;
     private Button buttonWestworld;
+    private Button buttonStarlight;
+    private Button buttonSunburn;
+    private Button buttonFringe;
+    private Button buttonFord;
+    private Button buttonGot;
+    private Button buttonBHS;
     private SoundPool soundPool;
+    private Map<Integer, Integer> noteMap;
     private int noteA;
     private int noteBb;
     private int noteB;
@@ -77,6 +89,41 @@ public class SynthesizerActivity extends AppCompatActivity implements View.OnCli
         wireWidgets();
         setListeners();
         initializeSoundPool();
+        initializeNoteMap();
+    }
+
+    private void initializeNoteMap() {
+        noteMap = new HashMap<>();
+        //in a map you store a key value pair
+        noteMap.put(R.id.button_synth_a, noteA);
+        noteMap.put(R.id.button_synth_b, noteB);
+        noteMap.put(R.id.button_synth_bb, noteBb);
+        noteMap.put(R.id.button_synth_c, noteC);
+        noteMap.put(R.id.button_synth_cs, noteCS);
+        noteMap.put(R.id.button_synth_d, noteD);
+        noteMap.put(R.id.button_synth_eb, noteEb);
+        noteMap.put(R.id.button_synth_e, noteE);
+        noteMap.put(R.id.button_synth_f, noteF);
+        noteMap.put(R.id.button_synth_fs, noteFS);
+        noteMap.put(R.id.button_synth_g, noteG);
+        noteMap.put(R.id.button_synth_gs, noteGS);
+        noteMap.put(R.id.button_synth_ha, noteHA);
+        noteMap.put(R.id.button_synth_hbb, noteHBb);
+        noteMap.put(R.id.button_synth_hb, noteHB);
+        noteMap.put(R.id.button_synth_hc, noteHC);
+        noteMap.put(R.id.button_synth_hcs, noteHCS);
+        noteMap.put(R.id.button_synth_hd, noteHD);
+        noteMap.put(R.id.button_synth_heb, noteHEb);
+        noteMap.put(R.id.button_synth_he, noteHE);
+        noteMap.put(R.id.button_synth_hf, noteHF);
+        noteMap.put(R.id.button_synth_hfs, noteHFS);
+        noteMap.put(R.id.button_synth_hg, noteHG);
+        noteMap.put(R.id.button_synth_hgs, noteHGS);
+
+
+
+        //the key is the button id, the value is the note id
+
     }
 
     private void initializeSoundPool() {
@@ -109,35 +156,41 @@ public class SynthesizerActivity extends AppCompatActivity implements View.OnCli
     }
 
     private void setListeners() {
-        buttonA.setOnClickListener(this);
-        buttonBb.setOnClickListener(this);
-        buttonB.setOnClickListener(this);
-        buttonC.setOnClickListener(this);
-        buttonCS.setOnClickListener(this);
-        buttonD.setOnClickListener(this);
-        buttonEb.setOnClickListener(this);
-        buttonE.setOnClickListener(this);
-        buttonF.setOnClickListener(this);
-        buttonFS.setOnClickListener(this);
-        buttonG.setOnClickListener(this);
-        buttonGS.setOnClickListener(this);
-        buttonHA.setOnClickListener(this);
-        buttonHBb.setOnClickListener(this);
-        buttonHB.setOnClickListener(this);
-        buttonHC.setOnClickListener(this);
-        buttonHCS.setOnClickListener(this);
-        buttonHD.setOnClickListener(this);
-        buttonHEb.setOnClickListener(this);
-        buttonHE.setOnClickListener(this);
-        buttonHF.setOnClickListener(this);
-        buttonHFS.setOnClickListener(this);
-        buttonHG.setOnClickListener(this);
-        buttonHGS.setOnClickListener(this);
+        KeyboardNoteListener noteListener = new KeyboardNoteListener();
+        buttonA.setOnClickListener(noteListener);
+        buttonBb.setOnClickListener(noteListener);
+        buttonB.setOnClickListener(noteListener);
+        buttonC.setOnClickListener(noteListener);
+        buttonCS.setOnClickListener(noteListener);
+        buttonD.setOnClickListener(noteListener);
+        buttonEb.setOnClickListener(noteListener);
+        buttonE.setOnClickListener(noteListener);
+        buttonF.setOnClickListener(noteListener);
+        buttonFS.setOnClickListener(noteListener);
+        buttonG.setOnClickListener(noteListener);
+        buttonGS.setOnClickListener(noteListener);
+        buttonHA.setOnClickListener(noteListener);
+        buttonHBb.setOnClickListener(noteListener);
+        buttonHB.setOnClickListener(noteListener);
+        buttonHC.setOnClickListener(noteListener);
+        buttonHCS.setOnClickListener(noteListener);
+        buttonHD.setOnClickListener(noteListener);
+        buttonHEb.setOnClickListener(noteListener);
+        buttonHE.setOnClickListener(noteListener);
+        buttonHF.setOnClickListener(noteListener);
+        buttonHFS.setOnClickListener(noteListener);
+        buttonHG.setOnClickListener(noteListener);
+        buttonHGS.setOnClickListener(noteListener);
         buttonPlayScale.setOnClickListener(this);
         buttonTwinkle.setOnClickListener(this);
         buttonNoSurprises.setOnClickListener(this);
         buttonWestworld.setOnClickListener(this);
-
+        buttonStarlight.setOnClickListener(this);
+        buttonSunburn.setOnClickListener(this);
+        buttonFringe.setOnClickListener(this);
+        buttonFord.setOnClickListener(this);
+        buttonGot.setOnClickListener(this);
+        buttonBHS.setOnClickListener(this);
     }
 
     private void wireWidgets() {
@@ -169,6 +222,13 @@ public class SynthesizerActivity extends AppCompatActivity implements View.OnCli
         buttonTwinkle = findViewById(R.id.button_main_twinkle);
         buttonNoSurprises = findViewById(R.id.button_main_ns);
         buttonWestworld = findViewById(R.id.button_main_westworld);
+        buttonStarlight = findViewById(R.id.button_synth_starlight);
+        buttonSunburn = findViewById(R.id.button_synth_sunburn);
+        buttonFringe = findViewById(R.id.button_main_fringe);
+        buttonFord = findViewById(R.id.button_main_ford);
+        buttonGot = findViewById(R.id.button_main_got);
+        buttonBHS = findViewById(R.id.button_main_blackholesun);
+
 
     }
 
@@ -300,121 +360,532 @@ public class SynthesizerActivity extends AppCompatActivity implements View.OnCli
             case R.id.button_main_westworld:
                 playWestworld();
                 break;
+            case R.id.button_synth_starlight:
+                playStarlight();
+                break;
+            case R.id.button_synth_sunburn:
+                playSunburn();
+                break;
+            case R.id.button_main_fringe:
+                playFringe();
+                break;
+            case R.id.button_main_ford:
+                playFord();
+                break;
+            case R.id.button_main_got:
+                playGot();
+                break;
+            case R.id.button_main_blackholesun:
+                playBlackHoleSun();
+                break;
+
         }
     }
 
+    private void playBlackHoleSun() {
+        Song bhs = new Song();
+        bhs.add(new Note(noteHC, WHOLE_NOTE/2));
+        bhs.add(new Note(noteHEb, WHOLE_NOTE/3));
+        bhs.add(new Note(noteHF, WHOLE_NOTE));
+        bhs.add(new Note(noteHC, WHOLE_NOTE/2));
+        bhs.add(new Note(noteHEb, WHOLE_NOTE/3));
+        bhs.add(new Note(noteHF, WHOLE_NOTE));
+        bhs.add(new Note(noteHC, WHOLE_NOTE/2));
+        bhs.add(new Note(noteHEb, WHOLE_NOTE/3));
+        bhs.add(new Note(noteHF, WHOLE_NOTE/2));
+        bhs.add(new Note(noteHGS, WHOLE_NOTE/3));
+        bhs.add(new Note(noteHEb, WHOLE_NOTE/2));
+        bhs.add(new Note(noteHF, WHOLE_NOTE/3));
+        bhs.add(new Note(noteHC, WHOLE_NOTE));
+        bhs.add(new Note(noteGS, WHOLE_NOTE/2));
+        bhs.add(new Note(noteHBb, WHOLE_NOTE/3));
+        bhs.add(new Note(noteHB, WHOLE_NOTE));
+        bhs.add(new Note(noteHCS, WHOLE_NOTE/2));
+        bhs.add(new Note(noteHB, WHOLE_NOTE/3));
+        bhs.add(new Note(noteHBb, WHOLE_NOTE));
+        bhs.add(new Note(noteGS, WHOLE_NOTE/3));
+        bhs.add(new Note(noteG, WHOLE_NOTE/2));
+        bhs.add(new Note(noteEb, WHOLE_NOTE));
+        bhs.add(new Note(noteHC, WHOLE_NOTE/3));
+        bhs.add(new Note(noteHC, WHOLE_NOTE/2));
+        bhs.add(new Note(noteHBb, WHOLE_NOTE/2));
+        bhs.add(new Note(noteHCS, WHOLE_NOTE));
+
+        playSong(bhs);
+    }
+
+    private void playGot() {
+        Song got = new Song();
+        got.add(new Note(noteHG, WHOLE_NOTE/2));
+        got.add(new Note(noteHC, WHOLE_NOTE/2));
+        got.add(new Note(noteHEb, WHOLE_NOTE/4));
+        got.add(new Note(noteHF, WHOLE_NOTE/4));
+        got.add(new Note(noteHG, WHOLE_NOTE/2));
+        got.add(new Note(noteHC, WHOLE_NOTE/2));
+        got.add(new Note(noteHEb, WHOLE_NOTE/4));
+        got.add(new Note(noteHF, WHOLE_NOTE/4));
+        got.add(new Note(noteHG, WHOLE_NOTE/2));
+        got.add(new Note(noteHC, WHOLE_NOTE/2));
+        got.add(new Note(noteHEb, WHOLE_NOTE/4));
+        got.add(new Note(noteHF, WHOLE_NOTE/4));
+        got.add(new Note(noteHG, WHOLE_NOTE/2));
+        got.add(new Note(noteHC, WHOLE_NOTE/2));
+        got.add(new Note(noteHEb, WHOLE_NOTE/4));
+        got.add(new Note(noteHF, WHOLE_NOTE/4));
+        got.add(new Note(noteHG, WHOLE_NOTE/2));
+        got.add(new Note(noteHC, WHOLE_NOTE/2));
+        got.add(new Note(noteHE, WHOLE_NOTE/4));
+        got.add(new Note(noteHF, WHOLE_NOTE/4));
+        got.add(new Note(noteHG, WHOLE_NOTE/2));
+        got.add(new Note(noteHC, WHOLE_NOTE/2));
+        got.add(new Note(noteHE, WHOLE_NOTE/4));
+        got.add(new Note(noteHF, WHOLE_NOTE/4));
+        got.add(new Note(noteHG, WHOLE_NOTE/2));
+        got.add(new Note(noteHC, WHOLE_NOTE/2));
+        got.add(new Note(noteHE, WHOLE_NOTE/4));
+        got.add(new Note(noteHF, WHOLE_NOTE/4));
+        got.add(new Note(noteHG, WHOLE_NOTE/2));
+        got.add(new Note(noteHC, WHOLE_NOTE/2));
+        got.add(new Note(noteHE, WHOLE_NOTE));
+        got.add(new Note(noteG, WHOLE_NOTE));
+        got.add(new Note(noteC, WHOLE_NOTE));
+        got.add(new Note(noteEb, WHOLE_NOTE/3));
+        got.add(new Note(noteF, WHOLE_NOTE/3));
+        got.add(new Note(noteG, WHOLE_NOTE/2));
+        got.add(new Note(noteC, WHOLE_NOTE));
+        got.add(new Note(noteEb, WHOLE_NOTE/3));
+        got.add(new Note(noteF, WHOLE_NOTE/2));
+        got.add(new Note(noteD, WHOLE_NOTE/3));
+        got.add(new Note(noteA, WHOLE_NOTE/2));
+        got.add(new Note(noteBb, WHOLE_NOTE/3));
+        got.add(new Note(noteC, WHOLE_NOTE/3));
+        got.add(new Note(noteD, WHOLE_NOTE/2));
+        got.add(new Note(noteA, WHOLE_NOTE/2));
+        got.add(new Note(noteBb, WHOLE_NOTE/3));
+        got.add(new Note(noteC, WHOLE_NOTE/3));
+        got.add(new Note(noteD, WHOLE_NOTE/2));
+        got.add(new Note(noteA, WHOLE_NOTE/2));
+        got.add(new Note(noteBb, WHOLE_NOTE/2));
+        got.add(new Note(noteF, WHOLE_NOTE));
+        got.add(new Note(noteBb, WHOLE_NOTE));
+        got.add(new Note(noteEb, WHOLE_NOTE/3));
+        got.add(new Note(noteD, WHOLE_NOTE/3));
+        got.add(new Note(noteF, WHOLE_NOTE/2));
+        got.add(new Note(noteBb, WHOLE_NOTE));
+        got.add(new Note(noteEb, WHOLE_NOTE/3));
+        got.add(new Note(noteD, WHOLE_NOTE/3));
+        got.add(new Note(noteC, WHOLE_NOTE));
+        got.add(new Note(noteHC, WHOLE_NOTE/2));
+        got.add(new Note(noteG, WHOLE_NOTE/2));
+        got.add(new Note(noteGS, WHOLE_NOTE/3));
+        got.add(new Note(noteHBb, WHOLE_NOTE/3));
+        got.add(new Note(noteHC, WHOLE_NOTE/2));
+        got.add(new Note(noteG, WHOLE_NOTE/2));
+        got.add(new Note(noteGS, WHOLE_NOTE/3));
+        got.add(new Note(noteHBb, WHOLE_NOTE/3));
+        got.add(new Note(noteHC, WHOLE_NOTE/2));
+        got.add(new Note(noteG, WHOLE_NOTE/2));
+        got.add(new Note(noteGS, WHOLE_NOTE/3));
+        got.add(new Note(noteHBb, WHOLE_NOTE/3));
+        got.add(new Note(noteHC, WHOLE_NOTE/2));
+        got.add(new Note(noteG, WHOLE_NOTE/2));
+        got.add(new Note(noteGS, WHOLE_NOTE));
+        got.add(new Note(noteHG, WHOLE_NOTE));
+        got.add(new Note(noteHC, WHOLE_NOTE));
+        got.add(new Note(noteHEb, WHOLE_NOTE/3));
+        got.add(new Note(noteHF, WHOLE_NOTE/3));
+        got.add(new Note(noteHG, WHOLE_NOTE/3));
+        got.add(new Note(noteHC, WHOLE_NOTE));
+        got.add(new Note(noteHEb, WHOLE_NOTE/3));
+        got.add(new Note(noteHF, WHOLE_NOTE/2));
+        got.add(new Note(noteHD, WHOLE_NOTE/3));
+        got.add(new Note(noteHA, WHOLE_NOTE/2));
+        got.add(new Note(noteHBb, WHOLE_NOTE/3));
+        got.add(new Note(noteHC, WHOLE_NOTE/3));
+        got.add(new Note(noteHD, WHOLE_NOTE/2));
+        got.add(new Note(noteHA, WHOLE_NOTE/2));
+        got.add(new Note(noteHBb, WHOLE_NOTE/3));
+        got.add(new Note(noteHC, WHOLE_NOTE/3));
+        got.add(new Note(noteHD, WHOLE_NOTE/2));
+        got.add(new Note(noteHA, WHOLE_NOTE/2));
+        got.add(new Note(noteHBb, WHOLE_NOTE/2));
+        got.add(new Note(noteHF, WHOLE_NOTE));
+        got.add(new Note(noteHBb, WHOLE_NOTE));
+        got.add(new Note(noteHEb, WHOLE_NOTE/3));
+        got.add(new Note(noteHD, WHOLE_NOTE/3));
+        got.add(new Note(noteHF, WHOLE_NOTE/2));
+        got.add(new Note(noteHBb, WHOLE_NOTE));
+        got.add(new Note(noteHEb, WHOLE_NOTE/3));
+        got.add(new Note(noteHD, WHOLE_NOTE/3));
+        got.add(new Note(noteHC, WHOLE_NOTE));
+        got.add(new Note(noteF, WHOLE_NOTE/2));
+        got.add(new Note(noteGS, WHOLE_NOTE/3));
+        got.add(new Note(noteHBb, WHOLE_NOTE/3));
+        got.add(new Note(noteHC, WHOLE_NOTE/2));
+        got.add(new Note(noteF, WHOLE_NOTE/2));
+        got.add(new Note(noteGS, WHOLE_NOTE/3));
+        got.add(new Note(noteHBb, WHOLE_NOTE/3));
+        got.add(new Note(noteHC, WHOLE_NOTE/2));
+        got.add(new Note(noteF, WHOLE_NOTE/2));
+        got.add(new Note(noteGS, WHOLE_NOTE/3));
+        got.add(new Note(noteHBb, WHOLE_NOTE/3));
+        got.add(new Note(noteHC, WHOLE_NOTE/2));
+        got.add(new Note(noteF, WHOLE_NOTE/2));
+        got.add(new Note(noteHBb, WHOLE_NOTE));
+
+
+
+
+
+        playSong(got);
+    }
+
+    private void playFord() {
+        Song ford = new Song();
+        ford.add(new Note(noteB, WHOLE_NOTE));
+        ford.add(new Note(noteD, WHOLE_NOTE + 500));
+        ford.add(new Note(noteBb, WHOLE_NOTE));
+        ford.add(new Note(noteB, WHOLE_NOTE));
+        ford.add(new Note(noteE, WHOLE_NOTE + 500));
+        ford.add(new Note(noteBb, WHOLE_NOTE));
+        ford.add(new Note(noteB, WHOLE_NOTE));
+        ford.add(new Note(noteFS, WHOLE_NOTE + 500));
+        ford.add(new Note(noteGS, WHOLE_NOTE));
+        ford.add(new Note(noteHA, WHOLE_NOTE + 500));
+        ford.add(new Note(noteGS, WHOLE_NOTE + 500));
+        ford.add(new Note(noteB, WHOLE_NOTE));
+        ford.add(new Note(noteD, WHOLE_NOTE + 500));
+        ford.add(new Note(noteBb, WHOLE_NOTE));
+        ford.add(new Note(noteBb, WHOLE_NOTE));
+        ford.add(new Note(noteB, WHOLE_NOTE + 500));
+        ford.add(new Note(noteE, WHOLE_NOTE));
+        ford.add(new Note(noteFS, WHOLE_NOTE + 500));
+        ford.add(new Note(noteB, WHOLE_NOTE));
+        ford.add(new Note(noteF, WHOLE_NOTE));
+        ford.add(new Note(noteFS, WHOLE_NOTE ));
+
+
+        playSong(ford);
+    }
+
+    private void playFringe() {
+        Song fringe = new Song();
+        fringe.add(new Note(noteC, WHOLE_NOTE/3));
+        fringe.add(new Note(noteEb, WHOLE_NOTE/3));
+        fringe.add(new Note(noteG, WHOLE_NOTE/3));
+        fringe.add(new Note(noteC, WHOLE_NOTE/3));
+        fringe.add(new Note(noteEb, WHOLE_NOTE/3));
+        fringe.add(new Note(noteG, WHOLE_NOTE/3));
+        fringe.add(new Note(noteC, WHOLE_NOTE/3));
+        fringe.add(new Note(noteEb, WHOLE_NOTE/3));
+        fringe.add(new Note(noteC, WHOLE_NOTE/3));
+        fringe.add(new Note(noteEb, WHOLE_NOTE/3));
+        fringe.add(new Note(noteGS, WHOLE_NOTE/3));
+        fringe.add(new Note(noteC, WHOLE_NOTE/3));
+        fringe.add(new Note(noteEb, WHOLE_NOTE/3));
+        fringe.add(new Note(noteGS, WHOLE_NOTE/3));
+        fringe.add(new Note(noteC, WHOLE_NOTE/3));
+        fringe.add(new Note(noteEb, WHOLE_NOTE/3));
+        fringe.add(new Note(noteB, WHOLE_NOTE/3));
+        fringe.add(new Note(noteD, WHOLE_NOTE/3));
+        fringe.add(new Note(noteF, WHOLE_NOTE/3));
+        fringe.add(new Note(noteB, WHOLE_NOTE/3));
+        fringe.add(new Note(noteD, WHOLE_NOTE/3));
+        fringe.add(new Note(noteF, WHOLE_NOTE/3));
+        fringe.add(new Note(noteB, WHOLE_NOTE/3));
+        fringe.add(new Note(noteD, WHOLE_NOTE/3));
+        fringe.add(new Note(noteB, WHOLE_NOTE/3));
+        fringe.add(new Note(noteD, WHOLE_NOTE/3));
+        fringe.add(new Note(noteG, WHOLE_NOTE/3));
+        fringe.add(new Note(noteB, WHOLE_NOTE/3));
+        fringe.add(new Note(noteD, WHOLE_NOTE/3));
+        fringe.add(new Note(noteG, WHOLE_NOTE/3));
+        fringe.add(new Note(noteB, WHOLE_NOTE/3));
+        fringe.add(new Note(noteD, WHOLE_NOTE/3));
+
+        playSong(fringe);
+
+
+    }
+
+    private void playSunburn() {
+        Song sunburn = new Song();
+        sunburn.add(new Note(noteB, WHOLE_NOTE/4));
+        sunburn.add(new Note(noteHB, WHOLE_NOTE/4));
+        sunburn.add(new Note(noteG, WHOLE_NOTE/4));
+        sunburn.add(new Note(noteE, WHOLE_NOTE/4));
+        sunburn.add(new Note(noteHB, WHOLE_NOTE/4));
+        sunburn.add(new Note(noteG, WHOLE_NOTE/4));
+        sunburn.add(new Note(noteE, WHOLE_NOTE/4));
+        sunburn.add(new Note(noteG, WHOLE_NOTE/4));
+        sunburn.add(new Note(noteA, WHOLE_NOTE/4));
+        sunburn.add(new Note(noteHB, WHOLE_NOTE/4));
+        sunburn.add(new Note(noteE, WHOLE_NOTE/4));
+        sunburn.add(new Note(noteC, WHOLE_NOTE/4));
+        sunburn.add(new Note(noteHB, WHOLE_NOTE/4));
+        sunburn.add(new Note(noteE, WHOLE_NOTE/4));
+        sunburn.add(new Note(noteC, WHOLE_NOTE/4));
+        sunburn.add(new Note(noteE, WHOLE_NOTE/4));
+        sunburn.add(new Note(noteC, WHOLE_NOTE/4));
+        sunburn.add(new Note(noteHC, WHOLE_NOTE/4));
+        sunburn.add(new Note(noteG, WHOLE_NOTE/4));
+        sunburn.add(new Note(noteE, WHOLE_NOTE/4));
+        sunburn.add(new Note(noteHC, WHOLE_NOTE/4));
+        sunburn.add(new Note(noteG, WHOLE_NOTE/4));
+        sunburn.add(new Note(noteE, WHOLE_NOTE/4));
+        sunburn.add(new Note(noteG, WHOLE_NOTE/4));
+        sunburn.add(new Note(noteA, WHOLE_NOTE/4));
+        sunburn.add(new Note(noteHB, WHOLE_NOTE/4));
+        sunburn.add(new Note(noteE, WHOLE_NOTE/4));
+        sunburn.add(new Note(noteC, WHOLE_NOTE/4));
+        sunburn.add(new Note(noteHB, WHOLE_NOTE/4));
+        sunburn.add(new Note(noteE, WHOLE_NOTE/4));
+        sunburn.add(new Note(noteC, WHOLE_NOTE/4));
+        sunburn.add(new Note(noteE, WHOLE_NOTE/4));
+        sunburn.add(new Note(noteB, WHOLE_NOTE/4));
+        sunburn.add(new Note(noteHB, WHOLE_NOTE/4));
+        sunburn.add(new Note(noteG, WHOLE_NOTE/4));
+        sunburn.add(new Note(noteE, WHOLE_NOTE/4));
+        sunburn.add(new Note(noteHB, WHOLE_NOTE/4));
+        sunburn.add(new Note(noteG, WHOLE_NOTE/4));
+        sunburn.add(new Note(noteE, WHOLE_NOTE/4));
+        sunburn.add(new Note(noteG, WHOLE_NOTE/4));
+        sunburn.add(new Note(noteA, WHOLE_NOTE/4));
+        sunburn.add(new Note(noteHB, WHOLE_NOTE/4));
+        sunburn.add(new Note(noteE, WHOLE_NOTE/4));
+        sunburn.add(new Note(noteC, WHOLE_NOTE/4));
+        sunburn.add(new Note(noteHB, WHOLE_NOTE/4));
+        sunburn.add(new Note(noteE, WHOLE_NOTE/4));
+        sunburn.add(new Note(noteC, WHOLE_NOTE/4));
+        sunburn.add(new Note(noteE, WHOLE_NOTE/4));
+        sunburn.add(new Note(noteC, WHOLE_NOTE/4));
+        sunburn.add(new Note(noteHC, WHOLE_NOTE/4));
+        sunburn.add(new Note(noteG, WHOLE_NOTE/4));
+        sunburn.add(new Note(noteE, WHOLE_NOTE/4));
+        sunburn.add(new Note(noteHC, WHOLE_NOTE/4));
+        sunburn.add(new Note(noteG, WHOLE_NOTE/4));
+        sunburn.add(new Note(noteE, WHOLE_NOTE/4));
+        sunburn.add(new Note(noteG, WHOLE_NOTE/4));
+        sunburn.add(new Note(noteA, WHOLE_NOTE/4));
+        sunburn.add(new Note(noteHB, WHOLE_NOTE/4));
+        sunburn.add(new Note(noteE, WHOLE_NOTE/4));
+        sunburn.add(new Note(noteC, WHOLE_NOTE/4));
+        sunburn.add(new Note(noteHB, WHOLE_NOTE/4));
+        sunburn.add(new Note(noteE, WHOLE_NOTE/4));
+        sunburn.add(new Note(noteC, WHOLE_NOTE/4));
+        sunburn.add(new Note(noteE, WHOLE_NOTE/4));
+
+
+        playSong(sunburn);
+    }
+
+    private void playStarlight() {
+        Song starlight = new Song();
+        starlight.add(new Note(noteHEb, WHOLE_NOTE/2));
+        starlight.add(new Note(noteHB, WHOLE_NOTE/2));
+        starlight.add(new Note(noteFS, WHOLE_NOTE/2));
+        starlight.add(new Note(noteHEb, WHOLE_NOTE/3));
+        starlight.add(new Note(noteHE, WHOLE_NOTE/2));
+        starlight.add(new Note(noteHCS, WHOLE_NOTE/2));
+        starlight.add(new Note(noteGS, WHOLE_NOTE/2));
+        starlight.add(new Note(noteHE, WHOLE_NOTE/3));
+        starlight.add(new Note(noteHEb, WHOLE_NOTE/3));
+        starlight.add(new Note(noteHCS, WHOLE_NOTE/3));
+        starlight.add(new Note(noteHEb, WHOLE_NOTE/2));
+        starlight.add(new Note(noteHB, WHOLE_NOTE/2));
+        starlight.add(new Note(noteGS, WHOLE_NOTE/2));
+        starlight.add(new Note(noteHEb, WHOLE_NOTE/3));
+        starlight.add(new Note(noteHE, WHOLE_NOTE/2));
+        starlight.add(new Note(noteHB, WHOLE_NOTE/2));
+        starlight.add(new Note(noteGS, WHOLE_NOTE/2));
+
+        playSong(starlight);
+    }
+
     private void playWestworld() {
-        playNote(noteA);
-        delay(WHOLE_NOTE);
-        playNote(noteA);
-        delay(WHOLE_NOTE);
-        playNote(noteF);
-        delay(WHOLE_NOTE);
-        playNote(noteF);
-        delay(WHOLE_NOTE);
-        playNote(noteA);
-        playNote(noteHA);
-        delay(WHOLE_NOTE/2);
-        playNote(noteA);
-        delay(WHOLE_NOTE/2);
-        playNote(noteA);
-        delay(WHOLE_NOTE/2);
-        playNote(noteA);
-        delay(WHOLE_NOTE/2);
-        playNote(noteA);
-        delay(WHOLE_NOTE/2);
+        Song westworld = new Song();
+        westworld.add(new Note(noteA, WHOLE_NOTE*2));
+        westworld.add(new Note(noteA, WHOLE_NOTE*2));
+        westworld.add(new Note(noteF, WHOLE_NOTE*2));
+        westworld.add(new Note(noteF, WHOLE_NOTE*2));
+        westworld.add(new Note(noteHA));
+        westworld.add(new Note(noteHC));
+        westworld.add(new Note(noteHD));
+        westworld.add(new Note(noteHE));
+        westworld.add(new Note(noteHE, WHOLE_NOTE*2));
+        westworld.add(new Note(noteE, WHOLE_NOTE*2));
+        westworld.add(new Note(noteHA));
+        westworld.add(new Note(noteHE));
+        westworld.add(new Note(noteHD));
+        westworld.add(new Note(noteHC));
+        westworld.add(new Note(noteHC, WHOLE_NOTE*2));
+        westworld.add(new Note(noteF, WHOLE_NOTE*2));
+        westworld.add(new Note(noteHA));
+        westworld.add(new Note(noteHC));
+        westworld.add(new Note(noteHD));
+        westworld.add(new Note(noteHE));
+        westworld.add(new Note(noteHE, WHOLE_NOTE*2));
+        westworld.add(new Note(noteG, WHOLE_NOTE*2));
+        westworld.add(new Note(noteHBb));
+        westworld.add(new Note(noteHF));
+        westworld.add(new Note(noteHE));
+        westworld.add(new Note(noteHD));
+        westworld.add(new Note(noteHE, WHOLE_NOTE*2));
+        westworld.add(new Note(noteA, WHOLE_NOTE*2));
+        westworld.add(new Note(noteHE, WHOLE_NOTE/2));
+        westworld.add(new Note(noteHF, WHOLE_NOTE/3));
+        westworld.add(new Note(noteHE, WHOLE_NOTE/2));
+        westworld.add(new Note(noteHF, WHOLE_NOTE/3));
+        westworld.add(new Note(noteHE, WHOLE_NOTE/3));
+        westworld.add(new Note(noteHD, WHOLE_NOTE/3));
+        westworld.add(new Note(noteHC, WHOLE_NOTE));
+        westworld.add(new Note(noteHD, WHOLE_NOTE*2));
+        westworld.add(new Note(noteHD, WHOLE_NOTE/2));
+        westworld.add(new Note(noteHE, WHOLE_NOTE/3));
+        westworld.add(new Note(noteHD, WHOLE_NOTE/2));
+        westworld.add(new Note(noteHE, WHOLE_NOTE/3));
+        westworld.add(new Note(noteHD, WHOLE_NOTE/3));
+        westworld.add(new Note(noteHC, WHOLE_NOTE/3));
+        westworld.add(new Note(noteG, WHOLE_NOTE));
+        westworld.add(new Note(noteA, WHOLE_NOTE));
+        westworld.add(new Note(noteG, WHOLE_NOTE*2));
+        westworld.add(new Note(noteHF, WHOLE_NOTE/2));
+        westworld.add(new Note(noteHA, WHOLE_NOTE/3));
+        westworld.add(new Note(noteHF, WHOLE_NOTE/2));
+        westworld.add(new Note(noteHA, WHOLE_NOTE/3));
+        westworld.add(new Note(noteHF, WHOLE_NOTE/2));
+        westworld.add(new Note(noteHE));
+        westworld.add(new Note(noteHD, WHOLE_NOTE));
+        westworld.add(new Note(noteHF, WHOLE_NOTE/2));
+        westworld.add(new Note(noteHE, WHOLE_NOTE*2));
+
+
+        playSong(westworld);
 
     }
 
     private void playNoSurprises() {
-        playNote(noteA);
-        delay(WHOLE_NOTE/2);
-        playNote(noteC);
-        delay(WHOLE_NOTE/2);
-        playNote(noteF);
-        delay(WHOLE_NOTE/2);
-        playNote(noteC);
-        delay(WHOLE_NOTE/2);
-        playNote(noteA);
-        delay(WHOLE_NOTE/2);
-        playNote(noteC);
-        delay(WHOLE_NOTE/2);
-        playNote(noteF);
-        delay(WHOLE_NOTE/2);
-        playNote(noteC);
-        delay(WHOLE_NOTE/2);
-        playNote(noteA);
-        delay(WHOLE_NOTE/2);
-        playNote(noteC);
-        delay(WHOLE_NOTE/2);
-        playNote(noteF);
-        delay(WHOLE_NOTE/2);
-        playNote(noteC);
-        delay(WHOLE_NOTE/2);
-        playNote(noteBb);
-        delay(WHOLE_NOTE/2);
-        playNote(noteCS);
-        delay(WHOLE_NOTE/2);
-        playNote(noteF);
-        delay(WHOLE_NOTE/2);
-        playNote(noteG);
-        delay(WHOLE_NOTE/2);
+        Song noSurprises = new Song();
+        noSurprises.add(new Note(noteA, WHOLE_NOTE/2));
+        noSurprises.add(new Note(noteC, WHOLE_NOTE/2));
+        noSurprises.add(new Note(noteF, WHOLE_NOTE/2));
+        noSurprises.add(new Note(noteC, WHOLE_NOTE/2));
+        noSurprises.add(new Note(noteA, WHOLE_NOTE/2));
+        noSurprises.add(new Note(noteC, WHOLE_NOTE/2));
+        noSurprises.add(new Note(noteF, WHOLE_NOTE/2));
+        noSurprises.add(new Note(noteC, WHOLE_NOTE/2));
+        noSurprises.add(new Note(noteA, WHOLE_NOTE/2));
+        noSurprises.add(new Note(noteC, WHOLE_NOTE/2));
+        noSurprises.add(new Note(noteF, WHOLE_NOTE/2));
+        noSurprises.add(new Note(noteC, WHOLE_NOTE/2));
+        noSurprises.add(new Note(noteBb, WHOLE_NOTE/2));
+        noSurprises.add(new Note(noteCS, WHOLE_NOTE/2));
+        noSurprises.add(new Note(noteF, WHOLE_NOTE/2));
+        noSurprises.add(new Note(noteG, WHOLE_NOTE/2));
+        noSurprises.add(new Note(noteA, WHOLE_NOTE/2));
+        noSurprises.add(new Note(noteC, WHOLE_NOTE/2));
+        noSurprises.add(new Note(noteF, WHOLE_NOTE/2));
+        noSurprises.add(new Note(noteC, WHOLE_NOTE/2));
+        noSurprises.add(new Note(noteA, WHOLE_NOTE/2));
+        noSurprises.add(new Note(noteC, WHOLE_NOTE/2));
+        noSurprises.add(new Note(noteF, WHOLE_NOTE/2));
+        noSurprises.add(new Note(noteC, WHOLE_NOTE/2));
+        noSurprises.add(new Note(noteA, WHOLE_NOTE/2));
+        noSurprises.add(new Note(noteC, WHOLE_NOTE/2));
+        noSurprises.add(new Note(noteF, WHOLE_NOTE/2));
+        noSurprises.add(new Note(noteC, WHOLE_NOTE/2));
+        noSurprises.add(new Note(noteB, WHOLE_NOTE/4));
+        noSurprises.add(new Note(noteBb, WHOLE_NOTE/2));
+        noSurprises.add(new Note(noteCS, WHOLE_NOTE/2));
+        noSurprises.add(new Note(noteF, WHOLE_NOTE/2));
+        noSurprises.add(new Note(noteG, WHOLE_NOTE/2));
+
+        playSong(noSurprises);
     }
 
     private void playTwinkle() {
-        playNote(noteA);
-        delay(WHOLE_NOTE/2);
-        playNote(noteA);
-        delay(WHOLE_NOTE/2);
-        playNote(noteE);
-        delay(WHOLE_NOTE/2);
-        playNote(noteE);
-        delay(WHOLE_NOTE/2);
-        playNote(noteFS);
-        delay(WHOLE_NOTE/2);
-        playNote(noteFS);
-        delay(WHOLE_NOTE/2);
-        playNote(noteE);
-        delay(WHOLE_NOTE);
-        playNote(noteD);
-        delay(WHOLE_NOTE/2);
-        playNote(noteD);
-        delay(WHOLE_NOTE/2);
-        playNote(noteCS);
-        delay(WHOLE_NOTE/2);
-        playNote(noteCS);
-        delay(WHOLE_NOTE/2);
-        playNote(noteB);
-        delay(WHOLE_NOTE/2);
-        playNote(noteB);
-        delay(WHOLE_NOTE/2);
-        playNote(noteA);
+        Song twinkle = new Song();
+        twinkle.add(new Note(noteA, WHOLE_NOTE/2));
+        twinkle.add(new Note(noteA, WHOLE_NOTE/2));
+        twinkle.add(new Note(noteHE, WHOLE_NOTE/2));
+        twinkle.add(new Note(noteHE, WHOLE_NOTE/2));
+        twinkle.add(new Note(noteHFS, WHOLE_NOTE/2));
+        twinkle.add(new Note(noteHFS, WHOLE_NOTE/2));
+        twinkle.add(new Note(noteHE));
+        twinkle.add(new Note(noteD, WHOLE_NOTE/2));
+        twinkle.add(new Note(noteD, WHOLE_NOTE/2));
+        twinkle.add(new Note(noteCS, WHOLE_NOTE/2));
+        twinkle.add(new Note(noteCS, WHOLE_NOTE/2));
+        twinkle.add(new Note(noteB, WHOLE_NOTE/2));
+        twinkle.add(new Note(noteB, WHOLE_NOTE/2));
+        twinkle.add(new Note(noteA));
+        twinkle.add(new Note(noteHE, WHOLE_NOTE/2));
+        twinkle.add(new Note(noteHE, WHOLE_NOTE/2));
+        twinkle.add(new Note(noteD, WHOLE_NOTE/2));
+        twinkle.add(new Note(noteD, WHOLE_NOTE/2));
+        twinkle.add(new Note(noteCS, WHOLE_NOTE/2));
+        twinkle.add(new Note(noteCS, WHOLE_NOTE/2));
+        twinkle.add(new Note(noteB));
+        twinkle.add(new Note(noteHE, WHOLE_NOTE/2));
+        twinkle.add(new Note(noteHE, WHOLE_NOTE/2));
+        twinkle.add(new Note(noteD, WHOLE_NOTE/2));
+        twinkle.add(new Note(noteD, WHOLE_NOTE/2));
+        twinkle.add(new Note(noteCS, WHOLE_NOTE/2));
+        twinkle.add(new Note(noteCS, WHOLE_NOTE/2));
+        twinkle.add(new Note(noteB));
+        twinkle.add(new Note(noteA, WHOLE_NOTE/2));
+        twinkle.add(new Note(noteA, WHOLE_NOTE/2));
+        twinkle.add(new Note(noteHE, WHOLE_NOTE/2));
+        twinkle.add(new Note(noteHE, WHOLE_NOTE/2));
+        twinkle.add(new Note(noteHFS, WHOLE_NOTE/2));
+        twinkle.add(new Note(noteHFS, WHOLE_NOTE/2));
+        twinkle.add(new Note(noteHE));
+        twinkle.add(new Note(noteD, WHOLE_NOTE/2));
+        twinkle.add(new Note(noteD, WHOLE_NOTE/2));
+        twinkle.add(new Note(noteCS, WHOLE_NOTE/2));
+        twinkle.add(new Note(noteCS, WHOLE_NOTE/2));
+        twinkle.add(new Note(noteB, WHOLE_NOTE/2));
+        twinkle.add(new Note(noteB, WHOLE_NOTE/2));
+        twinkle.add(new Note(noteA));
+
+
+        playSong(twinkle);
+
     }
 
     private void playScale() {
-        playNote(noteA);
-        delay(WHOLE_NOTE);
-        playNote(noteBb);
-        delay(WHOLE_NOTE);
-        playNote(noteB);
-        delay(WHOLE_NOTE);
-        playNote(noteC);
-        delay(WHOLE_NOTE);
-        playNote(noteCS);
-        delay(WHOLE_NOTE);
-        playNote(noteD);
-        delay(WHOLE_NOTE);
-        playNote(noteEb);
-        delay(WHOLE_NOTE);
-        playNote(noteE);
-        delay(WHOLE_NOTE);
-        playNote(noteF);
-        delay(WHOLE_NOTE);
-        playNote(noteFS);
-        delay(WHOLE_NOTE);
-        playNote(noteG);
-        delay(WHOLE_NOTE);
-        playNote(noteGS);
+        Song scale = new Song();
+        scale.add(new Note(noteA));
+        scale.add(new Note(noteBb));
+        scale.add(new Note(noteB));
+        scale.add(new Note(noteC));
+        scale.add(new Note(noteCS));
+        scale.add(new Note(noteD));
+        scale.add(new Note(noteEb));
+        scale.add(new Note(noteE));
+        scale.add(new Note(noteF));
+        scale.add(new Note(noteG));
+        scale.add(new Note(noteGS));
+        scale.add(new Note(noteHA));
+        scale.add(new Note(noteHBb));
+        scale.add(new Note(noteHB));
+        scale.add(new Note(noteHC));
+        scale.add(new Note(noteHCS));
+        scale.add(new Note(noteHD));
+        scale.add(new Note(noteHEb));
+        scale.add(new Note(noteHE));
+        scale.add(new Note(noteHF));
+        scale.add(new Note(noteHG));
+        scale.add(new Note(noteHGS));
+
+        playSong(scale);
+    }
+
+    private void playSong(Song song) {
+        for(Note note: song.getNotes()) {
+            playNote(note);
+            delay(note.getDelay());
+        }
     }
 
     private void delay(int duration) {
@@ -425,12 +896,27 @@ public class SynthesizerActivity extends AppCompatActivity implements View.OnCli
         }
     }
 
+    private void playNote(Note note){
+        playNote(note.getNoteId(), 0);
+    }
+
     private void playNote(int note, int loop) {
         soundPool.play(note, DEFAULT_VOLUME, DEFAULT_VOLUME, DEFAULT_PRIORITY, loop, DEFAULT_RATE);
     }
 
     private void playNote(int note) {
         playNote(note, 0);
+    }
+
+    private class KeyboardNoteListener implements View.OnClickListener
+    {
+
+        @Override
+        public void onClick(View v) {
+            int id = v.getId();
+            int note = noteMap.get(id);
+            playNote(note);
+        }
     }
 
 }
